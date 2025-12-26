@@ -1,0 +1,10 @@
+<div>
+  <input
+    #searchBox
+    type="text"
+    placeholder="Search Food Mine!"
+    (keyup.enter)="onSearch(searchBox.value)"
+    [value]="searchTerm"
+  />
+  <button (click)="onSearch(searchBox.value)">Search</button>
+</div>
