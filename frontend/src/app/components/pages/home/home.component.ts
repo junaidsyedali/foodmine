@@ -5,11 +5,12 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { StarRatingComponent } from '../../partials/star-rating/star-rating.component';
 import { SearchComponent } from '../../partials/search/search.component';
+import { TagsComponent } from '../../partials/tags/tags.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, CommonModule, StarRatingComponent, SearchComponent],
+  imports: [RouterLink, CommonModule, StarRatingComponent, SearchComponent, TagsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -20,8 +21,10 @@ export class HomeComponent {
     activatedRoute.params.subscribe((params) => {
       if (params['searchTerm']) {
         this.foods = foodService.getAllFoodBySearchTerm(params['searchTerm']);
+      } else if (params['tag']) {
+        this.foods = foodService.getAllFoodByTag(params['tag']);
       } else {
-        this.foods = foodService.getAll();
+        this.foods = foodService.getAllFoods();
       }
     });
   }
