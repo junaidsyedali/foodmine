@@ -5,10 +5,11 @@ import { CartItem } from '../../../shared/models/cartItem';
 import { TitleComponent } from '../../partials/title/title.component';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { NotFoundComponent } from '../../partials/not-found/not-found.component';
 
 @Component({
   selector: 'app-cart-page',
-  imports: [RouterLink, TitleComponent, CommonModule],
+  imports: [RouterLink, TitleComponent, CommonModule, NotFoundComponent],
   templateUrl: './cart-page.component.html',
   styleUrl: './cart-page.component.css',
 })
@@ -26,7 +27,6 @@ export class CartPageComponent {
   }
 
   changeQuantity(cartItem: CartItem, quantityInString: string): void {
-    console.log(Number.isFinite(Number(quantityInString)));
     if (!Number.isFinite(Number(quantityInString))) quantityInString = '1';
     const quantity = parseInt(quantityInString);
     this.cartService.changeQuantity(cartItem.food.id, quantity);

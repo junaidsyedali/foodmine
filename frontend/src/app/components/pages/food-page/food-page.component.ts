@@ -5,10 +5,11 @@ import { FoodService } from '../../../services/food.service';
 import { StarRatingComponent } from '../../partials/star-rating/star-rating.component';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../../services/cart.service';
+import { NotFoundComponent } from '../../partials/not-found/not-found.component';
 
 @Component({
   selector: 'app-food-page',
-  imports: [RouterLink, CommonModule, StarRatingComponent],
+  imports: [RouterLink, CommonModule, StarRatingComponent, NotFoundComponent],
   templateUrl: './food-page.component.html',
   styleUrl: './food-page.component.css',
 })
