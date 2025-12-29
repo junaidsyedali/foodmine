@@ -1,0 +1,50 @@
+import { Injectable } from '@angular/core';
+import { User } from '../shared/models/user';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { IUserLogin } from '../shared/interfaces/IUserLogin';
+import { HttpClient } from '@angular/common/http';
+import { USER_LOGIN_URL } from '../shared/constants/url';
+import { ToastrService } from 'ngx-toastr';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UserService {
+  private userSubject = new BehaviorSubject<User>(this.getUserFromLocalStorage());
+  public userObservable: Observable<User>;
+
+  constructor(private http: HttpClient, private toastrService: ToastrService) {
+    this.userObservable = this.userSubject.asObservable();
+  }
+
+  login(userLogin: IUserLogin): Observable<User> {
+    return this.http.post<User>(USER_LOGIN_URL, userLogin).pipe(
+      tap({
+        next: (user) => {
+          this.setUsertoLocalStorage(user);
+          this.userSubject.next(user);
+          this.toastrService.success(`Welcome to FoodMine ${user.name}`, 'Login Successful');
+        },
+        error: (err) => {
+          this.toastrService.error(err.error.message, 'Login Failed');
+        },
+      })
+    );
+  }
+
+  logout() {
+    this.userSubject.next(new User());
+    localStorage.removeItem('user');
+    window.location.reload();
+  }
+
+  private setUsertoLocalStorage(user: User) {
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  private getUserFromLocalStorage(): User {
+    const userJson = localStorage.getItem('user');
+    if (userJson) return JSON.parse(userJson) as User;
+    return new User();
+  }
+}

@@ -1,7 +1,10 @@
 import express from "express";
 import cors from "cors";
-import { sample_foods, sample_tags } from "./data";
+import { sample_foods, sample_tags, sample_users } from "./data";
+import jwt from "jsonwebtoken";
+
 const app = express();
+app.use(express.json());
 const PORT = 5000;
 app.use(cors({ credentials: true, origin: ["http://localhost:4200"] }));
 app.disable("etag");
@@ -35,6 +38,33 @@ app.get("/api/foods/tag/:tagName", (req, res) => {
   );
   res.json(filteredFoods);
 });
+
+app.post("/api/users/login", (req, res) => {
+  const { email, password } = req.body;
+  const user = sample_users.find(
+    (user) => user.email === email && user.password === password
+  );
+  if (user) {
+    res.send(generateTokenResponse(user));
+  } else {
+    res.status(401).json({ message: "Invalid email or password" });
+  }
+});
+
+const generateTokenResponse = (user: any) => {
+  const token = jwt.sign(
+    {
+      email: user.email,
+      isAdmin: user.isAdmin,
+    },
+    "secretkey",
+    {
+      expiresIn: "30d",
+    }
+  );
+  user.token = token;
+  return user;
+};
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
