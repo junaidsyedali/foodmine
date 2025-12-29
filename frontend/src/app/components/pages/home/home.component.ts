@@ -7,6 +7,7 @@ import { StarRatingComponent } from '../../partials/star-rating/star-rating.comp
 import { SearchComponent } from '../../partials/search/search.component';
 import { TagsComponent } from '../../partials/tags/tags.component';
 import { NotFoundComponent } from '../../partials/not-found/not-found.component';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -23,9 +24,9 @@ import { NotFoundComponent } from '../../partials/not-found/not-found.component'
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  foods: Food[] = [];
+  foods: Observable<Food[]> = of([]);
 
-  constructor(private foodService: FoodService, activatedRoute: ActivatedRoute) {
+  constructor(foodService: FoodService, activatedRoute: ActivatedRoute) {
     activatedRoute.params.subscribe((params) => {
       if (params['searchTerm']) {
         this.foods = foodService.getAllFoodBySearchTerm(params['searchTerm']);

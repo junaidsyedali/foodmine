@@ -3,6 +3,7 @@ import { Tag } from '../../../shared/models/tag';
 import { FoodService } from '../../../services/food.service';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tags',
@@ -11,7 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './tags.component.css',
 })
 export class TagsComponent {
-  tags?: Tag[];
+  tags?: Observable<Tag[]>;
 
   constructor(foodService: FoodService) {
     this.tags = foodService.getAllTags();

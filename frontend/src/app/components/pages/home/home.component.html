@@ -1,8 +1,8 @@
 <app-search></app-search>
 <app-tags></app-tags>
-<app-not-found [visible]="!foods || !foods.length" resetLinkText="Reset Search!"></app-not-found>
+<app-not-found [visible]="!(foods | async)?.length" resetLinkText="Reset Search!"></app-not-found>
 <ul>
-  <li *ngFor="let food of foods">
+  <li *ngFor="let food of foods | async">
     <a routerLink="/food/{{ food.id }}">
       <img [src]="food.imageUrl" alt="{{ food.name }}" />
       <div class="content">
@@ -11,7 +11,7 @@
         <div class="stars">
           <app-star-rating [rating]="food.stars" [readonly]="true"></app-star-rating>
         </div>
-        <div class="'product-item-footer">
+        <div class="product-item-footer">
           <div class="origins">
             <span *ngFor="let origin of food.origins">{{ origin }}</span>
           </div>

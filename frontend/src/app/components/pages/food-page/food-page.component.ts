@@ -6,6 +6,7 @@ import { StarRatingComponent } from '../../partials/star-rating/star-rating.comp
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../../services/cart.service';
 import { NotFoundComponent } from '../../partials/not-found/not-found.component';
+import { lastValueFrom, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-food-page',
@@ -14,7 +15,7 @@ import { NotFoundComponent } from '../../partials/not-found/not-found.component'
   styleUrl: './food-page.component.css',
 })
 export class FoodPageComponent {
-  food!: Food;
+  food!: Observable<Food>;
 
   constructor(
     activatedRoute: ActivatedRoute,
@@ -29,8 +30,8 @@ export class FoodPageComponent {
     });
   }
 
-  addToCart(): void {
-    this.cartService.addToCart(this.food);
+  async addToCart(): Promise<void> {
+    this.cartService.addToCart(await lastValueFrom(this.food));
     this.router.navigateByUrl('/cart-page');
   }
 }
