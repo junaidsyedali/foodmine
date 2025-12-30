@@ -2,7 +2,9 @@ import { Router } from "express";
 import { sample_users } from "../data";
 import jwt from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
-import { UserModel } from "../models/user.model";
+import { User, UserModel } from "../models/user.model";
+import { HTTP_BAD_REQUEST, HTTP_UNAUTHORIED } from "../constants/http_status";
+import bcrypt from "bcryptjs";
 
 const router = Router();
 
@@ -27,12 +29,38 @@ router.post(
     if (user) {
       res.send(generateTokenResponse(user));
     } else {
-      res.status(401).json({ message: "Invalid email or password" });
+      res
+        .status(HTTP_UNAUTHORIED)
+        .json({ message: "Invalid email or password" });
     }
   })
 );
 
+router.post(
+  "/register",
+  asyncHandler(async (req, res) => {
+    const { name, email, password, address } = req.body;
+    const user = await UserModel.findOne({ email: email });
+    if (user) {
+      res.status(HTTP_BAD_REQUEST).send("User already exists!");
+      return;
+    }
+    const encryptedPassword = await bcrypt.hash(password, 10);
+    const newUser: User = {
+      id: "",
+      name,
+      email: email.toLowerCase(),
+      password: encryptedPassword,
+      address,
+      isAdmin: false,
+    };
+    const dbUser = await UserModel.create(newUser);
+    res.send(generateTokenResponse(dbUser));
+  })
+);
+
 const generateTokenResponse = (user: any) => {
+  user = user.toObject(); // must convert mongoose object to plain json object
   const token = jwt.sign(
     {
       email: user.email,

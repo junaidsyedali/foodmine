@@ -7,3 +7,4 @@ export const FOODS_BY_TAG_URL = `${FOODS_URL}/tag/`;
 export const FOODS_TAGS_URL = `${FOODS_URL}/tags`;
 
 export const USER_LOGIN_URL = `${BASE_URL}/users/login`;
+export const USER_REGISTER_URL = `${BASE_URL}/users/register`;

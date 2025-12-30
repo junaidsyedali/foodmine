@@ -16,6 +16,10 @@
       ></app-text-input>
 
       <app-default-button text="Login"></app-default-button>
+      <div class="register">
+        New user? &nbsp;
+        <a routerLink="/register" [queryParams]="{ returnUrl: returnUrl }">Register Here</a>
+      </div>
     </form>
   </div>
 </div>

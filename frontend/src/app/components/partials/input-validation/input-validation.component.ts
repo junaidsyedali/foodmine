@@ -3,8 +3,10 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
 const VALIDATOR_MESSAGES: any = {
-  required: 'This field is required.',
-  email: 'Email is not valid.',
+  required: 'Field is required.',
+  email: 'Email is not valid',
+  minlength: 'Field is too short',
+  notMatch: 'Passwords does not match',
 };
 
 @Component({
