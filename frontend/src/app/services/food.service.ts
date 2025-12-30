@@ -10,7 +10,7 @@ import {
   FOODS_TAGS_URL,
   FOODS_URL,
 } from '../shared/constants/url';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class FoodService {
   constructor(private http: HttpClient) {}
 
   getAllFoods(): Observable<Food[]> {
-    return this.http.get<Food[]>(FOODS_URL);
+    return this.http.get<Food[]>(FOODS_URL).pipe(shareReplay(1));
   }
 
   getAllFoodBySearchTerm(searchTerm: string): Observable<Food[]> {

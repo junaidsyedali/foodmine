@@ -4,12 +4,15 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideToastr, ToastNoAnimation } from 'ngx-toastr';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { loadingInterceptor } from './shared/interceptors/loading.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
+    provideHttpClient(withInterceptors([loadingInterceptor])),
     provideToastr({
       positionClass: 'toast-bottom-right',
       timeOut: 3000,
