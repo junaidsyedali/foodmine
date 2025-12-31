@@ -8,3 +8,6 @@ export const FOODS_TAGS_URL = `${FOODS_URL}/tags`;
 
 export const USER_LOGIN_URL = `${BASE_URL}/users/login`;
 export const USER_REGISTER_URL = `${BASE_URL}/users/register`;
+
+export const ORDERS_URL = `${BASE_URL}/orders`;
+export const ORDER_CREATE_URL = `${ORDERS_URL}/create`;

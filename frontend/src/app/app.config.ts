@@ -6,13 +6,14 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { provideToastr, ToastNoAnimation } from 'ngx-toastr';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { loadingInterceptor } from './shared/interceptors/loading.interceptor';
+import { authInterceptor } from './auth/interceptor/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideHttpClient(withInterceptors([loadingInterceptor])),
+    provideHttpClient(withInterceptors([loadingInterceptor, authInterceptor])),
     provideToastr({
       positionClass: 'toast-bottom-right',
       timeOut: 3000,

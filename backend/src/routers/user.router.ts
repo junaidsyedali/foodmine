@@ -60,19 +60,26 @@ router.post(
 );
 
 const generateTokenResponse = (user: any) => {
-  user = user.toObject(); // must convert mongoose object to plain json object
   const token = jwt.sign(
     {
+      id: user.id,
       email: user.email,
       isAdmin: user.isAdmin,
     },
-    "secretkey",
+    process.env.JWT_SECRET!,
     {
       expiresIn: "30d",
     }
   );
   user.token = token;
-  return user;
+  return {
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    address: user.address,
+    isAdmin: user.isAdmin,
+    token: token,
+  };
 };
 
 export default router;
