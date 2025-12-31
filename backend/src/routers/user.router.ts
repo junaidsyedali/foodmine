@@ -25,8 +25,8 @@ router.post(
   "/login",
   asyncHandler(async (req, res) => {
     const { email, password } = req.body;
-    const user = await UserModel.findOne({ email: email, password: password });
-    if (user) {
+    const user = await UserModel.findOne({ email: email });
+    if (user && (await bcrypt.compare(password, user.password))) {
       res.send(generateTokenResponse(user));
     } else {
       res

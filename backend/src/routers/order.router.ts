@@ -28,6 +28,14 @@ router.post(
 );
 
 router.get(
+  "/track/:id",
+  asyncHandler(async (req, res) => {
+    const order = await OrderModel.findById(req.params.id);
+    res.send(order);
+  })
+);
+
+router.get(
   "/newOrderForCurrentUser",
   asyncHandler(async (req: any, res) => {
     const order = await getNewOrderForCurrentUser(req);
