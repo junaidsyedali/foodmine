@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LoadingService } from '../../../services/loading.service';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-loading',
@@ -9,11 +10,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './loading.component.css',
 })
 export class LoadingComponent {
-  isLoading!: boolean;
+  isLoading: Observable<boolean>;
 
   constructor(loadingService: LoadingService) {
-    loadingService.isLoading.subscribe((isLoading) => {
-      this.isLoading = isLoading;
-    });
+    this.isLoading = loadingService.isLoading;
   }
 }
