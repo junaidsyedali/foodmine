@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { Tag } from '../../../shared/models/tag';
 import { FoodService } from '../../../services/food.service';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tags',
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, RouterLinkActive],
   templateUrl: './tags.component.html',
   styleUrl: './tags.component.css',
 })

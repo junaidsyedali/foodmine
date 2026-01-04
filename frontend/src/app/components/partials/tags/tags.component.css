@@ -12,3 +12,7 @@ div a {
   font-weight: 600;
   color: blue;
 }
+
+div a.active {
+  color: red;
+}
