@@ -1,8 +1,6 @@
 import { isDevMode } from '@angular/core';
 
-const BASE_URL = isDevMode()
-  ? 'http://localhost:5000/api'
-  : process.env.RENDER_EXTERNAL_HOSTNAME + '/api';
+const BASE_URL = isDevMode() ? '' : `http://localhost:${process.env.PORT}/api`;
 
 export const FOODS_URL = `${BASE_URL}/foods`;
 export const FOOD_BY_ID_URL = `${FOODS_URL}/`;
